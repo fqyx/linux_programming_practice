@@ -1,0 +1,40 @@
+The name of the C compiler is gcc.
+Just compile as C, do not link for binary.
+% gcc -c main.c
+
+The C++ compiler is called g++.
+Just compile as C++, do not link for binary.
+% g++ -c main.c
+
+The -I option is used to tell GCC where to search for header files.
+% g++ -c -I ../include reciprocal.cpp
+
+Sometimes you'll want to define macros on the command line.
+For example, in production code, you don't want the overhead of the assertion check present in reciprocal.cpp; that's only there to help you debug the program. You turn off the check by defining the macro NDEBUG. You could add an explicit #define to reciprocal.cpp, but that would require changing the source itself. It's easier to simply define NDEBUG on the command line, like this: 
+% g++ -c -D NDEBUG reciprocal.cpp
+
+If you had wanted to define NDEBUGto some particular value, you could have done something like this: 
+% g++ -c -D NDEBUG=3 reciprocal.cpp
+
+If you're really building production code, you probably want to have GCC optimize the code so that it runs as quickly as possible.You can do this by using the -O2 command-line option. (GCC has several different levels of optimization; the second level is appropriate for most programs.) For example, the following compiles reciprocal.cpp with optimization turned on:
+% g++ -c -O2 reciprocal.cpp 
+
+Note that compiling with optimization can makeyour program more difficult to debug with a debugger. Also, in certain instances, compiling with optimization can uncover bugs in your program thatdid not manifest themselves previously.
+You can pass lots of other options to gccand g++. The best way to get a complete list is to view the online documentation. You can do this by typing the following at your command prompt: 
+% info gcc
+
+Now that you've compiled main.cand utilities.cpp, you'll want to link them. You should always use g++ to link a program that contains C++ code, even if it also contains C code. If your program contains only C code, you should use gccinstead. Because this program contains both C and C++, you should use g++, like this: 
+% g++ -o reciprocal main.o reciprocal.o 
+The -ooption gives the name of the file to generate as output from the link step. Now you can run reciprocallike this: 
+% ./reciprocal 7 
+The reciprocal of 7 is 0.142857
+
+As you can see, g++has automatically linked in the standard C runtime library containing the implementation of printf. If you had needed to link in another library (such as a graphical user interface toolkit), you would have specified the library with the -loption. In Linux, library names almost always start with lib. For example, the Pluggable Authentication Module (PAM) library is called libpam.a. To link in libpam.a, you use a command like this: 
+% g++ -o reciprocal main.o reciprocal.o -lpam 
+The compiler automatically adds the libprefix and the .a suffix. 
+
+As with header files, the linker looks for libraries in some standard places, including the /lib and /usr/lib directories that contain the standard system libraries. If you want the linker to search other directories as well, you should use the -Loption, which is the parallel of the -I option discussed earlier. You can use this line to instruct the linker to look for libraries in the /usr/local/lib/pamdirectory before looking in the usual places: 
+% g++ -o reciprocal main.o reciprocal.o -L/usr/local/lib/pam -lpam 
+Although you don't have to use the -I option to get the preprocessor to search the current directory, you do have to use the -L option to get the linker to search the current directory. In particular, you could use the following to instruct the linker to find the testlibrary in the current directory: 
+% gcc -o app app.o -L. -ltest
+
