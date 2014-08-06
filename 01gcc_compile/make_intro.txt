@@ -1,0 +1,9 @@
+The $(CFLAGS)is a makevariable. You can define this variable either in the Makefileitself or on the command line. GNU makewill substitute the value of the variable when it executes the rule. So, for example, to recompile with optimization enabled, you would do this: 
+% make clean 
+rm -f *.o reciprocal 
+% make CFLAGS=-O2 
+gcc -O2 -c main.c 
+g++ -O2 -c reciprocal.cpp 
+g++ -O2 -o reciprocal main.o reciprocal.o 
+Note that the -O2flag was inserted in place of $(CFLAGS)in the rules. In this section, you've seen only the most basic capabilities of make. You can find out more by typing this: 
+% info make 

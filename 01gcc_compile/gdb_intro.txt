@@ -1,0 +1,6 @@
+To use GDB, you'll have to compile with debugging information enabled. Do this by adding the -g switch on the compilation command line. If you're using a Makefileas described previously, you can just set CFLAGSequal to -gwhen you run make, as shown here:
+% make CFLAGS=-g 
+gcc -g -c main.c 
+g++ -g -c reciprocal.cpp 
+g++ -g -o reciprocal main.o reciprocal.o 
+
