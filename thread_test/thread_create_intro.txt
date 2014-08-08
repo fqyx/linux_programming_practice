@@ -1,0 +1,2 @@
+As pthread.h contains only the declarations of the thread related functions and data types, and the pthread functions are not included in the standard C library. Instead they are in libpthread, so you should add -lpthread to the command line when you link your program.
+cc -o thread-create thread-create.c -lpthread
